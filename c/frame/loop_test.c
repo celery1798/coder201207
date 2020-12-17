@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define RATE_SIMP	0.1
 #define RATE_COMP	0.05
@@ -78,10 +79,95 @@ void test5()
 		printf("\n");	
 	
 	}
+}
 
+void test2()
+{
+	int num,ct_even = 0,ct_odd = 0;
+	float sum_even = 0,sum_odd = 0;
 
+	while(scanf("%d",&num) == 1 && num != 0)
+	{
+		if(num % 2 == 0)
+		{
+			ct_even ++;
+			sum_even += num;
+		}
+		else
+		{
+			ct_odd ++;
+			sum_odd += num;
+		}			
+	}
+	printf("ODD:%d\tAVE:%f\n",ct_odd,sum_odd/ct_odd);
+	printf("EVEN:%d\tAVE:%f\n",ct_even,sum_even/ct_even);
 
 }
+
+void test4()
+{
+	long int f1 = 1,f2 = 1;
+	int i;
+
+	for(i = 1 ; i <= 20 ;i++)
+	{
+		printf("%10ld%10ld",f1,f2);
+		if(i % 2 == 0)
+			printf("\n");
+		
+		f1 += f2;
+		f2 += f1;
+	}
+}
+
+#define LINE	6
+
+void test9()
+{
+	int i,j;
+	char start = 'F',ch;
+
+	for(i = 0 ; i < LINE ; i++)
+	{
+		// _
+		for(j = 0 ; j < i; j++)
+			printf("_");
+
+
+		// ch
+		for(ch = start,j = 0; j <= i; j++)
+			printf("%c",ch--);
+	
+		printf("\n");
+	}
+}
+
+#define MAX	100
+#define MIN	0
+
+void test17()
+{
+	int min = MAX,max = MIN,num;
+
+	printf("Please enter (q for quit) :");
+	while(scanf("%d",&num) == 1)
+	{
+		if(num < MIN || num > MAX)
+		{
+			printf("Enter error! Please try again\n");
+			sleep(1);
+			printf("Please enter (q for quit) :");
+			continue;
+		}
+
+		min = num < min ? num : min;
+		max = num > max ? num : max;
+		printf("Please enter (q for quit) :");
+	}
+
+	printf("MIN = %d\tMAX = %d\n",min,max);
+}
+
 
 int main()
 {
@@ -89,7 +175,11 @@ int main()
 //	test1();
 //	test6();
 //	test14_1();
-	test5();
+//	test5();
+//	test2();
+//	test4();
+//	test9();
+	test17();
 
 	exit(0); 	//return 0;
 }
