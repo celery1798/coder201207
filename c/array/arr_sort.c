@@ -32,11 +32,40 @@ void choose_sort()
 
 }
 
+void bubble_sort()
+{
+	int a[] = {34,12,3,76,5,8,9,12,18};
+	int i,j,k,t,ii;
+
+	for(i = 0 ; i < 9; i++)
+		printf("%d ",a[i]);
+	printf("\n");
+
+	for(i = 0 ; i < 8; i++)
+	{
+		for(j = 0; j < 8-i ;j++)
+			if(a[j] > a[j+1])
+			{
+				t = a[j];
+				a[j] = a[j+1];
+				a[j+1] = t;
+			}
+	}
+	
+
+	for(i= 0 ; i < 9; i++)
+		printf("%d ",a[i]);
+	printf("\n");
+
+
+}
+
+
 int main()
 {
 
-	choose_sort();
-
+//	choose_sort();
+	bubble_sort();
 
 
 
