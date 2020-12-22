@@ -10,6 +10,16 @@ strlen
 
 int main()
 {
+	char str[32] = "worldaABC",str1[] = "worldb";
+	char str2[] = "\t\072\x78\nWALL";
+
+//	printf("%d\n",strncmp(str,str1,5));
+
+//	printf("%ld\n",sizeof(str));
+	printf("%ld\n",strlen(str2));
+
+
+/*
 	char str[32] = "0123456789";
 
 	puts(str);
@@ -17,7 +27,7 @@ int main()
 
 	strcpy(str+5,str);
 	puts(str);
-
+*/
 /*
 	char str[10] = "abc",str1[30] = "world";
 	strcpy(str,str1);
