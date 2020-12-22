@@ -47,6 +47,9 @@ int main()
 	int *p = arr;	// &arr[0];
 	int i;
 
+	printf("sizeof(arr) = %ld\n",sizeof(arr));
+	printf("sizeof(p) = %ld\n",sizeof(p));
+	
 	for(i = 0 ; i < sizeof(arr)/sizeof(arr[0]); i++)
 		//printf("%p --> %d\n",arr+i,*(arr+i));
 		printf("%p --> %d\n",&p[i],p[i]);

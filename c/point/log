@@ -1,0 +1,25 @@
+
+TYPE NAME = VALUE;
+
+int i = 1;
+float f = 1.2;
+char ch = 'f';
+double d = 3.45;
+int *p = &i;
+
+int a[3] = {2,3,4};
+int[3] a = {2,3,4};
+int *p = a;
+p+i -> i * int
+
+
+int a[2][3] = {xxxx};
+int [2][3]   a = {xxxx};
+int [3]  a[2];
+ T  a[2];
+ T *p = a;
+ int[3] *p = a;
+int (*p)[3] = a;
+
+
+
