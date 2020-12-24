@@ -14,7 +14,7 @@ float score_ave(int *p,int n)
 	return sum/n;
 }
 
-int score_find(int (*p)[N],int m,int n)
+int *score_find(int (*p)[N],int m,int n)
 {
 	int id,i;
 
@@ -22,24 +22,31 @@ int score_find(int (*p)[N],int m,int n)
 	scanf("%d",&id);
 	
 	if(id < 0 || id > m-1)
-		return -1;
+		return NULL;
 
-	for(i = 0 ; i < n; i++)
-		printf("%d ",*(*(p+id)+i));
-	printf("\n");
 
-	return 0;
+	return *(p+id);
 }
 
 int main()
 {
 	int a[M][N] = {{78,90,84,91},{94,89,88,45},{78,56,99,100}};
+	int *p,i;
 
 	printf("AVE:%f\n",score_ave(*a,M*N));
 
-	score_find(a,M,N);
-
-
+	p = score_find(a,M,N);
+	if(p == NULL)
+	{
+		printf("Can not find !\n");
+	}
+	else
+	{
+		for(i = 0 ; i < N; i++)
+			printf("%d ",*(p+i));
+		printf("\n");
+	}
+	
 	exit(0);
 }
 

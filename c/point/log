@@ -20,6 +20,46 @@ int [3]  a[2];
  T *p = a;
  int[3] *p = a;
 int (*p)[3] = a;
+---------------------------------
+
+int func(int,char){     }
+int(int,char)   func  {    }
+int(int,char)  *p = func;
+int (*p)(int,char) = func;
+
+int (*p)(int,char)
+int *p(int,char)
+
+T i;
+T *p = 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
