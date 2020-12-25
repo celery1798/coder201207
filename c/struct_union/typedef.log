@@ -1,0 +1,141 @@
+
+TYPE NAME = VALUE;
+
+int i = 1;
+float f = 1.2;
+char ch = 'f';
+double d = 3.45;
+int *p = &i;
+
+int a[3] = {2,3,4};
+int[3] a = {2,3,4};
+int *p = a;
+p+i -> i * int
+
+
+int a[2][3] = {xxxx};
+int [2][3]   a = {xxxx};
+int [3]  a[2];
+ T  a[2];
+ T *p = a;
+ int[3] *p = a;
+int (*p)[3] = a;
+---------------------------------
+
+int func(int,char){     }
+int(int,char)   func  {    }
+int(int,char)  *p = func;
+int (*p)(int,char) = func;
+
+int (*p)(int,char)
+int *p(int,char)
+
+T i;
+T *p = 
+
+-----------------------------------------------
+
+typedef 已有的类型   新名字 ;
+
+struct student s2,*p;
+typedef struct student STU;
+STU s2,*p;
+
+------------------
+#define INT	int
+INT i;
+
+typedef int  INT;
+INT i;
+
+----------------
+
+typedef int * INTP;
+INTP p,q;  -> int *p,*q;
+
+#define INTP   int *
+INTP p,q;  -> int *p,q;
+---------------------------
+
+typedef int A[6]
+	-> int[6]	A
+A   a; -> int a[6];
+
+
+typedef int A[6];
+A a; -> int a[6];
+
+
+typedef int ARR[2][3]; ->  int[2][3]  ARR
+ARR b; -> int b[2][3];
+
+------------------------------------
+
+int fun(int,int)
+int(int,int) fun
+
+typedef int(int,int)	FUNC
+typedef int FUNC(int,int);
+FUNC f1; -> int f1(int,int);
+
+
+typedef int *FUNC(int,int);
+FUNC f1; -> int *f1(int,int);
+
+typedef int *(*FUNC)(int,int);  -> int*(int,int)  *
+FUNC f1; -> int *(*f1)(int,int);
+
+
+typedef int *(*FUNC[3])(int,int);
+FUNC f1; -> int *(*f1[3])(int,int);
+
+------------------------------------------
+struct:
+
+struct	student 
+{
+	int id;
+	char name[12];
+	float math;
+}s1,s2;
+
+typedef struct student STU;		-> STU P -> p
+typedef struct student *STUP;   -> STUP  p-> *p;
+
+--------
+typedef struct  student
+{
+	int id;
+	char name[12];
+	float math;
+}STU,*STUP;
+
+---------------------------------------
+func:
+
+typedef int F(int,int);
+F *p = add;
+F *q = sub;
+
+
+typedef int(*FP)(int,int);
+FP p = add,q = sub;
+
+int op(int a,int b, FP p);//F *p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
