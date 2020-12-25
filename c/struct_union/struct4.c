@@ -23,8 +23,9 @@ int main()
 	struct node b[2][3] ;	//= {{{},{},{}},{{},{},{}}};
 	struct node (*pp)[3] = b;
 
-	func(x.ch, *p, arr[0],arr+1,bb[1].f, &y, b[0][2], *(b+1)+1, pp[0][1].ch, pp+1);
-
+	func(x.ch,   *p,    arr[0],     arr+1,     bb[1].f,   &y,  b[0][2], 	*(b+1)+1, 	pp[0][1].ch, 	pp+1);
+--------------------------------------------------------
+func(char, struct node, struct node, struct node*, float,struct node *, struct node, struct node*, char, struct (*)[3])
 
 	exit(0);
 }
