@@ -17,16 +17,35 @@ void menu()
 	printf("\n---MENU---\n1 SET\n2 CHANGE NAME\n3 SHOW\nPlease enter(q for quit):");
 }
 
-void set(struct student *p)
+int  set(struct student *p)
 {
+	char name[NAMEMAX];
 	printf("Please enter:");	
-	scanf("%d%s%f",&p->id, p->name ,&p->math);
+	scanf("%d%s%f",&p->id, name ,&p->math);
+	if(strlen(name) > NAMEMAX)
+		return -1;
+	
+	p->name = malloc(strlen(name)+1);
+	if(p->name == NULL)
+		return -2;
+
+	strcpy(p->name,name);	
+	return 0;
 }
 
-void changename(struct student *p)
+int changename(struct student *p)
 {
+	char name[NAMEMAX];
 	printf("Please enter the NEWNAME:");
-	scanf("%s",p->name);
+	scanf("%s",name);
+	if(strlen(name) > NAMEMAX)
+       return -1;
+	free(p->name);
+	p->name = malloc(strlen(name)+1);
+	if(p->name == NULL)
+		return -2;
+	strcpy(p->name,name);
+	    return 0;
 }
 
 void show(struct student *p)
@@ -34,10 +53,23 @@ void show(struct student *p)
 	printf("%d %s %f\n",p->id, p->name, p->math);
 }
 
+void init(struct student *p)
+{
+	p->id = p->math = 0;
+	p->name = NULL;
+}
+
+void destroy(struct student *p)
+{
+	free(p->name);
+}
+
 int main()
 {
-	struct student s1 = {0,"",0};
+	struct student s1 ;
 	int nu;
+	
+	init(&s1);
 
 	while(1)
 	{
@@ -61,6 +93,8 @@ int main()
 		}
 		sleep(1);
 	}
+	destroy(&s1);
+
 	exit(0);
 }
 
