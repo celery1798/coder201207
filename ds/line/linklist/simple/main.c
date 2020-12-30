@@ -21,9 +21,11 @@ int main()
 		list_insert_value(handler,a[i]);
 	list_display(handler);
 
-	list_delete_value(handler,22);
+//	list_delete(handler,5,NULL);
+	list_reverse(handler);
 	list_display(handler);
 
+	
 	list_destroy(handler);
 
 	exit(0);

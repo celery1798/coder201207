@@ -51,7 +51,7 @@ void list_display(LIST *l)
 }
 
 int list_delete(LIST *l,int pos, int *newdata)
-{
+{ //@   0 1 2 3   pos = 4
 	LIST *p = l,*q;
 	int i = 0;
 
@@ -61,7 +61,7 @@ int list_delete(LIST *l,int pos, int *newdata)
 		i++;	
 	}
 
-	if(p)
+	if(p && p->next)
 	{
 		q = p->next;
 		
@@ -144,9 +144,37 @@ void list_destroy(LIST *l)
 	free(l);
 }
 
+void list_reverse(LIST *l)
+{
+/*
+//@ 0 1 2 3       ->         @ 4 3 2 1 0
+     q p 	
+     r q p  
+	   r q p
+		 r q p=NULL	
 
+// @ 0 1
+*/
 
+	LIST *p ,*q, *r = NULL;
 
+	if(l->next == NULL || l->next->next == NULL)
+		return ;
+
+	q = l->next;
+	p = l->next->next;	
+
+	while(p)
+	{
+		q->next = r;
+		r = q;
+		q = p;
+		p = p->next;
+	}
+
+	q->next = r;
+	l->next = q;
+}
 
 
 
