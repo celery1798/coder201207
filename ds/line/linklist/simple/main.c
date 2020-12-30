@@ -6,7 +6,7 @@
 int main()
 {
 	LIST *handler;
-	int a[] = {4,5,6,7},i;
+	int a[] = {14,5,26,7,9},i;
 
 
 	handler = list_create();
@@ -17,12 +17,14 @@ int main()
 	}
 	
 	for(i = 0 ; i < sizeof(a)/sizeof(*a); i++)
-		list_insert(handler,0,a[i]);
-
+//		list_insert(handler,0,a[i]);
+		list_insert_value(handler,a[i]);
 	list_display(handler);
 
-//	list_insert(handler,5,100);
-//	list_display(handler);
+	list_delete_value(handler,22);
+	list_display(handler);
+
+	list_destroy(handler);
 
 	exit(0);
 }

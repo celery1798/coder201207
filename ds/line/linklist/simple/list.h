@@ -21,6 +21,9 @@ void list_display(LIST *);
 
 void list_clear(LIST *);
 void list_destroy(LIST *);
+//将一个带头结点的单向不循环链表进行逆序存放
+
+void list_reverse(LIST *);
 
 #endif
 
