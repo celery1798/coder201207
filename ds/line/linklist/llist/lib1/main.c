@@ -13,6 +13,20 @@ struct score
 	int math;
 };
 
+int id_cmp(const void *data,const void *key)
+{
+	const struct score *d = data;
+	const int *id = key;
+	return d->id - *id;
+}
+int name_cmp(const void *data,const void *key)
+{
+	const struct score *d = data;
+	const char *name = key;
+	return strcmp(d->name ,name);
+}
+
+
 void print_s(void *data)
 {
 	struct score *d = data;
@@ -42,7 +56,25 @@ int main()
 	}
 
 	llist_travel(handler, print_s);
+	printf("\n");
 
+	int id = 1;
+	char *name = "stu2";
+	int math = 100;
+	void *retp;
+
+	llist_delete(handler,&id,id_cmp);
+	llist_travel(handler, print_s);
+
+
+/*
+//	retp = llist_find(handler,&id,id_cmp);
+	retp = llist_find(handler,name,name_cmp);
+	if(retp == NULL)
+		printf("Can not find!\n");
+	else
+		print_s(retp);
+*/
 //	llist_destroy(handler);
 	exit(0);
 }
