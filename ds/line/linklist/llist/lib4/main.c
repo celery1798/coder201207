@@ -52,10 +52,10 @@ int main()
 		snprintf(tmp.name,NAMESIZE,"Stu%d",i);
 		tmp.math = 100-i;
 
-		llist_insert(handler,&tmp,LLIST_BACKWARD);
+		handler->insert(handler,&tmp,LLIST_BACKWARD);
 	}
 
-	llist_travel(handler, print_s);
+	handler->travel(handler, print_s);
 	printf("\n");
 
 	int id = 1;
@@ -65,10 +65,10 @@ int main()
 
 //	llist_delete(handler,&id,id_cmp);
 
-	if(llist_fetch(handler,&id,id_cmp,&tmp) == 0)
+	if(handler->fetch(handler,&id,id_cmp,&tmp) == 0)
 		print_s(&tmp);
 	printf("\n");	
-	llist_travel(handler, print_s);
+	handler->travel(handler, print_s);
 
 
 /*
