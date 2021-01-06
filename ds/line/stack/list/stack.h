@@ -1,17 +1,17 @@
+#ifndef __STACK_H__
+#define __STACK_H__
 
+#include "llist.h"
 
+typedef LLIST STACK;
 
+STACK *stack_create(int size);
 
-stack_create();
+int stack_push(STACK *, const void *data);
 
-stack_push();
+int stack_pop(STACK *,void *data);
 
-stack_pop();
+void stack_destroy(STACK *);
 
-stack_travel();
-
-stack_destroy();
-
-
-
+#endif
 
