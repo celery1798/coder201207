@@ -42,6 +42,23 @@ int insert(TREE **root,struct score *data)
 	return insert(&(*root)->r,data);
 }
 
+static void draw_(TREE *root,int level)
+{
+	int i;
+	if(root == NULL)
+		return ;
+	draw_(root->r,level+1);
+	for(i = 0 ; i < level; i++)
+		printf("    ");
+	print_s(&root->data);
+	draw_(root->l,level+1);
+}
+
+void draw(TREE *root)
+{
+	draw_(root,0);
+}
+
 int main()
 {
 	struct score tmp;
@@ -57,11 +74,11 @@ int main()
 
 		insert(&tree,&tmp);
 	}
-
-
 	
-//	draw();
+	draw(tree);
 
+	balance(&tree);
+	draw(tree);
 
 	exit(0);
 }
