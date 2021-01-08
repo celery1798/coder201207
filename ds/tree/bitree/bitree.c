@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <queue.h>
+
+
 #define NAMESIZE    32
 
 struct score
@@ -129,6 +132,50 @@ void balance(TREE **root)
 
 }
 
+#if 0
+void travel(TREE *root)
+{
+	if(root == NULL)
+		return ;
+	travel(root->l);
+	print_s(&root->data);
+	travel(root->r);
+}
+
+#else
+//按层
+void travel(TREE *root)
+{
+	QUEUE *qu;
+	struct node_st *cur;
+
+	qu = queue_create(sizeof(struct node_st *));
+	/*if error*/
+
+	queue_en(qu,&root);
+
+	while(1)
+	{
+		if(queue_de(qu, &cur) != 0)
+			break;
+		print_s(&cur->data);
+		if(cur->l)
+			queue_en(qu,&cur->l);
+		if(cur->r)
+			queue_en(qu,&cur->r);
+	}
+}
+
+#endif
+
+
+struct score *find(TREE *root,int id)
+{
+	
+
+
+}
+
 
 int main()
 {
@@ -151,6 +198,15 @@ int main()
 	draw(tree);
 
 	travel(tree);
+
+	int id;
+	struct score *retp;
+	retp = find(tree,id);
+	if(retp != NULL)
+		print_s(retp);
+
+
+//	delete(&tree,id);//原则：右孩子顶上来
 
 
 	exit(0);
