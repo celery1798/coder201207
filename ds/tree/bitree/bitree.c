@@ -132,7 +132,7 @@ void balance(TREE **root)
 
 }
 
-#if 0
+#if 1 
 void travel(TREE *root)
 {
 	if(root == NULL)
@@ -171,9 +171,13 @@ void travel(TREE *root)
 
 struct score *find(TREE *root,int id)
 {
-	
-
-
+	if(root == NULL)
+		return NULL;
+	if(root->data.id == id)
+		return &root->data;
+	if(id < root->data.id)
+		return find(root->l,id);
+	return find(root->r,id);
 }
 
 
@@ -199,15 +203,13 @@ int main()
 
 	travel(tree);
 
-	int id;
+	int id = 11;
 	struct score *retp;
 	retp = find(tree,id);
 	if(retp != NULL)
 		print_s(retp);
 
-
 //	delete(&tree,id);//原则：右孩子顶上来
-
 
 	exit(0);
 }
