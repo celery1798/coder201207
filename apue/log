@@ -1,0 +1,33 @@
+3-16
+
+
+I/O :input output 
+	标准IO	- 5
+	文件IO	- 3
+	
+	高级IO(非阻塞)	- 14
+
+
+并发：
+	多线程 - 11 12
+	多进程 - (7)8 10 15
+
+
+IPC:
+	pipe				- 15
+	xsi：msg,shm,sem	- 15
+	socket:stream  dgram -16
+
+4 6 7 (9) 13
+
+
+网络基础/原理   ->   UNP   -> TCP/IP协议 
+
+
+
+
+
+
+
+
+
