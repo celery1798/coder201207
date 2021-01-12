@@ -1,0 +1,16 @@
+sys io
+
+
+int 
+
+
+open();
+close();
+
+read();
+write();
+
+lseek();
+
+
+
