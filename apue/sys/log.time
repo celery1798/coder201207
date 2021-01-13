@@ -1,0 +1,27 @@
+1 求100天后的日期 
+2 time.c -> timelog.txt
+
+
+1 2021-1-13 15:30:40
+2 2021-1-13 15:30:41
+3 2021-1-13 15:30:43
+4 2021-1-13 15:40:20
+5 2021-1-13 15:40:21
+6 2021-1-13 15:40:22
+7 2021-1-13 15:40:23
+
+
+time_t stamp;
+
+time(&stamp);     //   stamp = time(NULL);
+
+struct tm *tm;
+
+tm = localtime(&stamp);
+tm->tm_year
+
+char str[32];
+strftime(str,32,"Now: %Y-%m-%d",tm);
+puts(str);
+
+
