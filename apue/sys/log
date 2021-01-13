@@ -1,0 +1,43 @@
+
+请写一个函数，功能：删除一个常规文本文件的 第10行
+
+fdr = open(r);
+fdw = open(r+)
+
+newlen = totallen - len10;
+
+seek(fdr,11);
+seek(fdw,10);
+
+
+while()
+{
+	read(fdr);
+	write(fdw);
+
+}
+
+truncate/ftruncate(newlen)
+
+
+
+
+--------------------------------------------
+
+
+
+fd = open();
+
+newlen = totallen - len10;
+
+while()
+{
+	seek();
+	read();
+	seek(10);
+	write();
+
+}
+
+truncate/ftruncate(newlen)
+
