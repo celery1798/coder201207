@@ -1,0 +1,36 @@
+
+
+
+fd1 = open()
+if(fd1 < 0)
+{
+	perror;
+	exit(1);
+}
+atexit(func1);		-> void func1(){  close(fd1);  }
+
+fd2=open()
+if(fd2 < 0)
+{
+	perror();
+	exit(1);
+}
+atexit(func2);		->   close(fd2);
+
+........
+
+
+malloc * 100
+
+
+fd100 = open()
+if(fd100 < 0)
+{
+	perror();
+	exit(1);
+}
+
+
+
+
+
