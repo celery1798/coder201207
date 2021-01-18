@@ -1,0 +1,24 @@
+CC=gcc
+OBJS=main.o 
+OBJS+=tool1.o tool2.o
+CFLAGS=-g -Wall -D_FILE_OFFSET_BITS=64
+LDFLAGS=-lm
+
+
+mytool:$(OBJS)
+	$(CC) $(OBJS) -o mytool $(LDFLAGS)
+
+tool2.o:tool2.c
+	$(CC) $(CFLAGS) -c tool2.c -o tool2.o
+main.o:main.c
+	$(CC) $(CFLAGS) -c main.c -o main.o
+tool1.o:tool1.c
+	$(CC) $(CFLAGS) -c tool1.c -o tool1.o
+
+
+clean:
+	$(RM) -rf *.o mytool 	
+
+
+
+
