@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <syslog.h>
+#include <string.h>
+#include <errno.h>
 
 int mydaemon_init()
 {
@@ -13,7 +16,7 @@ int mydaemon_init()
 	pid = fork();
 	if(pid < 0)
 	{
-		perror("fork()");
+		syslog(LOG_ERR,"fork():%s",strerror(errno));
 		return -1;
 	}
 
@@ -31,21 +34,21 @@ int mydaemon_init()
 	fd = open("/dev/null",O_RDWR);
 	if(fd < 0)
 	{
-		perror("open()");
-		return -2;
+		syslog(LOG_WARNING,"open():%s",strerror(errno));
 	}
-
-	dup2(fd,0);
-	dup2(fd,1);
-	dup2(fd,2);
-	if(fd > 2)
-		close(fd);
+	else
+	{
+		dup2(fd,0);
+		dup2(fd,1);
+		dup2(fd,2);
+		if(fd > 2)
+			close(fd);
+	}
 
 	setsid();
 
 	chdir("/");
 	umask(0);
-
 	return 0;
 }
 
@@ -54,31 +57,40 @@ int main()
 	FILE *fp;
 	int i;
 
+	openlog("mydaemon",LOG_PID,LOG_DAEMON);
+
 	if(mydaemon_init())
 	{
-		printf("mydaemon_init() error.\n");
+		syslog(LOG_ERR,"mydaemon_init() error.");
 		exit(1);
 	}
 	else
-		printf("mydaemon_init() succeed\n");
+		syslog(LOG_NOTICE,"mydaemon_init() succeed");
 
 	/*do sth*/	
 
 	fp = fopen("/tmp/mydaemon.log","w");
 	if(fp == NULL)
 	{
-		perror("fopen()");
+		syslog(LOG_ERR,"fopen():%s",strerror(errno));
 		exit(1);
 	}
+
+	syslog(LOG_INFO,"%s was opened.","/tmp/mydaemon.log");
 
 	for(i = 0 ; ; i++)
 	{
 		fprintf(fp,"%d\n",i);
 		fflush(fp);
+
+		syslog(LOG_DEBUG,"%d was printed.",i);
+
 		sleep(1);
 	}
 
 	fclose(fp);
+	closelog();
+
 
 	exit(0);
 }
