@@ -6,24 +6,24 @@
 #include <time.h>
 #include <signal.h>
 
-static volatile int loop = 1;
-
 void alrm_handler(int s)
 {
-	loop = 0;
+	printf("alrm_handler()\n");
+	alarm(1);
 }
 
 int main()
 {
-	long long count = 0;		
-
 	signal(SIGALRM,alrm_handler);
 	alarm(5);
+	alarm(1);
+	alarm(3);
 		
-	while(loop)
-		count++;
-
-	printf("%lld\n",count);
+	while(1);
+	{
+		printf("while(1)\n");
+		sleep(1);
+	}
 
 	exit(0);
 }
