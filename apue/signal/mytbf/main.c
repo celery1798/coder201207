@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "mytbf.h"
 
@@ -12,6 +18,7 @@ int main(int argc,char *argv[])
 	int sfd,dfd = 1,len,ret,pos;
 	char buf[BUFSIZE];
 	mytbf_t *tbf;
+	int size;
 
 	if(argc < 2)
 	{
@@ -20,9 +27,10 @@ int main(int argc,char *argv[])
 	}
 
 	tbf = mytbf_init(CPS,BURST);
-	if()
+	if(tbf == NULL)
 	{
-	
+		fprintf(stderr,"mytbf_init() error.\n");
+		exit(1);
 	}
 
 	do
@@ -41,7 +49,11 @@ int main(int argc,char *argv[])
 	while(1)
 	{
 		size = mytbf_fetchtoken(tbf,BUFSIZE);
-
+		if(size < 0)
+		{
+			fprintf(stderr,"mytbf_fetchtoken():%s\n",strerror(-size));
+			exit(1);
+		}
 
 		while((len = read(sfd,buf,size)) < 0)
 		{
