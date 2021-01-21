@@ -9,6 +9,8 @@
 
 typedef void (*sighandler_t)(int);
 
+#define SIGUSR2  SIGWAKEUP
+
 struct mytbf_st
 {
 	int cps;
@@ -20,6 +22,11 @@ struct mytbf_st
 static struct mytbf_st *job[MYTBF_MAX];
 static int inited = 1;
 static struct sigaction osa;
+
+static void usr2_handler(int s)
+{
+	return ;
+}
 
 static void alrm_sa(int s,siginfo_t *infop,void *unused)
 {
@@ -74,6 +81,13 @@ static void module_load()
 		perror("sigaction()");
 		exit(1);
 	}
+
+	sa.sa_handler = usr2_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGWAKEUP,&sa,NULL);
+	/*if error*/
+
 
 	itv.it_interval.tv_sec = 1;
 	itv.it_interval.tv_usec = 0;
@@ -161,6 +175,9 @@ int mytbf_returntoken(mytbf_t *tbf,int n)
 	me->token += n;
 	if(me->token > me->burst)
 		me->token = me->burst;
+	
+	raise(SIGWAKEUP);
+
 	return 0;
 }
 
