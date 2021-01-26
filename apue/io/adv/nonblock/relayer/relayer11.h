@@ -8,6 +8,7 @@ enum
 {
 	STATE_RUNNING=1,
 	STATE_CANCELED,
+	STATE_PAUSE,
 	STATE_OVER
 };
 
@@ -16,6 +17,7 @@ struct rel_stat_st
 	int fd1,fd2;
 	int state;
 	int count12,count21;
+	struct timeval start,end;
 };
 
 
@@ -45,6 +47,11 @@ int rel_waitjob(int id,struct rel_stat_st *);
 return		== 0        成功，指定任务已释放资源 
 			==-EINVAL   失败，参数非法
 */
+//-------------------------------------------------------
+
+int rel_pausejob(int id);
+int rel_resumejob(int id);
+
 
 
 #endif

@@ -42,6 +42,7 @@ struct rel_job_st
 	int job_state;
 	pthread_mutex_t mut;
 	pthread_cond_t cond;
+	struct timeval start,end;
 };
 
 

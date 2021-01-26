@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include "relayer.h"
+
 #define BUFSIZE	1024
 
 #define TTY1	"/dev/tty11"
@@ -17,8 +19,9 @@
 
 int main(int argc,char *argv[])
 {
-	int fd1,fd2,len,ret,pos;
+	int fd1,fd2,fd3,fd4,len,ret,pos;
 	char buf[BUFSIZE];
+	int job1,job2;
 
 	fd1 = open(TTY1,O_RDWR|O_NONBLOCK);
 	if(fd1 < 0)
@@ -69,16 +72,16 @@ int main(int argc,char *argv[])
 		exit(1);
 	}
 
-
+	struct rel_stat_st st;
 	while(1)
 	{
-		rel_statjob(job1);
-		printf();
-		rel_statjob(job2);
-		printf();
-		sleep(10);
+		rel_statjob(job1,&st);
+		printf("job1:1->2(%d)\t2->1(%d)\n",st.count12,st.count21);
+		rel_statjob(job2,&st);
+		printf("job2:1->2(%d)\t2->1(%d)\n\n",st.count12,st.count21);
+	
+		sleep(1);
 	}
-
 
 	close(fd1);
 	close(fd2);
