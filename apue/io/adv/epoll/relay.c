@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <poll.h>
+#include <sys/epoll.h>
 
 #define BUFSIZE	1024
 
@@ -112,7 +112,8 @@ int max(int a,int b)
 void relay(int fd1,int fd2)
 {
 	struct fsm_st fsm12,fsm21;
-	struct pollfd pfd[2];
+	int epfd;
+	struct epoll_event ev;
 
 	fsm12.state = STATE_R;
 	fsm12.sfd = fd1;
@@ -122,42 +123,67 @@ void relay(int fd1,int fd2)
 	fsm21.sfd = fd2;
 	fsm21.dfd = fd1;
 
-	pfd[0].fd = fd1;
-	pfd[1].fd = fd2;
+
+	epfd = epoll_create(10);
+	if(epfd < 0)
+	{
+		perror("epoll_create()");
+		exit(1);
+	}
+
+	ev.events = 0;
+	ev.data.fd = fd1;
+	epoll_ctl(epfd,EPOLL_CTL_ADD,fd1,&ev);
+
+	ev.events = 0;
+	ev.data.fd = fd2;
+	epoll_ctl(epfd,EPOLL_CTL_ADD,fd2,&ev);
+
 
 	while(fsm12.state != STATE_T || fsm21.state != STATE_T)
 	{
 		//布置监视任务
-		pfd[0].events = 0;
+		ev.data.fd = fd1;
+		ev.events = 0;
 		if(fsm12.state == STATE_R)
-			pfd[0].events |= POLLIN;
+			ev.events |= EPOLLIN;
 		if(fsm21.state == STATE_W)
-			pfd[0].events |= POLLOUT;
+			ev.events |= EPOLLOUT;
+		epoll_ctl(epfd,EPOLL_CTL_MOD,fd1,&ev);	
 
-		pfd[1].events = 0;
+		ev.data.fd = fd2;
+		ev.events = 0;
 		if(fsm12.state == STATE_W)
-			pfd[1].events |= POLLOUT;
+			ev.events |= EPOLLOUT;
 		if(fsm21.state == STATE_R)
-			pfd[1].events |= POLLIN;
+			ev.events |= EPOLLIN;
+		epoll_ctl(epfd,EPOLL_CTL_MOD,fd2,&ev);
 
 		//监视 
 		if(fsm12.state < STATE_AUTO || fsm21.state < STATE_AUTO)
 		{
-			while(poll(pfd,2,-1) < 0)
+			while(epoll_wait(epfd,&ev,1,-1) < 0)
 			{
 				if(errno == EINTR)
 					continue;
-				perror("poll()");
+				perror("epoll_wait()");
 				exit(1);
 			}
 		}
 
 		//查看监视结果
-		if(pfd[0].revents & POLLIN || pfd[1].revents & POLLOUT || fsm12.state > STATE_AUTO)
+		if(ev.data.fd == fd1 && ev.events & EPOLLIN || \
+			ev.data.fd == fd2 && ev.events & EPOLLOUT || \
+			fsm12.state > STATE_AUTO)
 			driver(&fsm12);
-		if(pfd[1].revents & POLLIN || pfd[0].revents & POLLOUT || fsm21.state > STATE_AUTO)
+
+		if(ev.data.fd == fd2 && ev.events & EPOLLIN || \
+			ev.data.fd == fd1 && ev.events & EPOLLOUT || \
+			fsm21.state > STATE_AUTO)
 			driver(&fsm21);
 	}
+
+	close(epfd);
 
 }
 
