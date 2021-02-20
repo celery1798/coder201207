@@ -18,10 +18,161 @@ IPC:
 	xsi：msg,shm,sem	- 15
 	socket:stream  dgram -16
 
-4 6 7 (9) 13
+4 6 7       (9) 13
 
 
 网络基础/原理   ->   UNP   -> TCP/IP协议 
+
+
+
+
+---------------------------------------------------------------------------
+
+2021-2-20 补充复习
+
+
+5:stdio
+
+FILE *   -> fopen
+
+fopen  fclose
+fgetc  fputc 
+fgets  fputs
+fread  fwrite
+fseek  ftell  rewind
+缓冲区5.4  fflush   
+
+
+eg: mycpyXXX.c   fflush.c
+
+大作业 : mygetline
+
+--------------------------
+
+3:sysio
+
+int  fd      ->  open
+
+open  close
+read write
+lseek
+
+dup dup2
+
+
+eg: mycpy.c   dup.c    ab.c
+
+--------------------------
+4  6  7 :  myls大作业 
+
+
+stat
+glob
+
+eg:ftype.c  flen.c   glob.c   mydu.c 
+
+----
+
+getpwuid  getpwnam
+getgruid  getgrnam
+time  localtime mktime  strftime   
+
+eg:username.c   time.c   100days.c
+
+-----
+
+8 = 5 + 3  :  exit   atexit
+7.6
+getopt
+setjmp
+longjmp
+
+eg:mydate.c   jmp.c 
+------------------------------------
+
+8:
+
+fork
+execXX
+wait
+
+eg:fork.c  primer0/1/2.c  few.c   mysh.c  primerN.c 
+
+------------------------------------
+
+(9)  13
+
+
+setsid
+openlog  syslog   closelog
+
+
+eg:daemon
+
+-------------------------------------
+
+10:
+异步 同步
+异步事件特点：
+处理方式：查询法  通知法
+
+signal  ->  sigaction
+kill  raise
+alarm   ->  setitimer
+sigprocmask  ->可以保护某段代码不被某些信号干扰(我们可以决定信号何时被响应)
+sigsuspend  ->信号驱动程序
+abort
+
+eg:star.c   slowcat/1.c   mytbf(mytbf1)  sigprocmask.c  sigsuspend.c  sigsuspend_rtsig.c 
+
+
+ 大作业: anytimer
+
+-----------------------------------------
+
+11 12:
+
+pthread_
+
+pthread_create
+pthread_join
+pthread_self
+pthread_cleanup_push/pop
+pthread_cancel
+
+mutex  互斥量(加锁,独占)
+cond   条件变量(通知法)
+
+eg:create.c  add.c(sleep,mutex)  abcd.c  primer0/_e/_pool/_pool_e.c  mytbf_mt
+
+大作业:anytimer_mt
+
+回避死锁:确定临界区,精减临界区,留意跳转语句
+
+
+---------------------------------------------
+
+14:非阻塞  有限状态机
+
+select
+poll
+epoll
+
+mmap   munmap     ->  malloc free   ->  共享存储
+
+
+eg:relay.c   relayer
+
+---------------------------------------------
+15:
+ 
+
+
+pipe
+
+eg:pipe.c
+
+
 
 
 
