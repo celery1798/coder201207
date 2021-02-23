@@ -1,0 +1,18 @@
+
+ADDR = IP + port
+
+被动端 :先接包的一方,先运行起来 
+1 socket
+2 bind
+3 收包/发
+4 关闭close
+
+主动端 :先发包的一方
+1 socket
+2 bind(可省)
+3 发/收
+4 close
+
+
+
+
