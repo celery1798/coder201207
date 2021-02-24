@@ -1,0 +1,14 @@
+
+
+
+
+socket
+
+connect  
+
+
+recv();
+
+
+close();
+
