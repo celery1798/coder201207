@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <net/if.h>
 #include <time.h>
+#include <errno.h>
 
 #include "proto.h"
 
@@ -35,6 +36,7 @@ int main()
 	char ipstr[IPSTRSIZE];
 	struct sockaddr_in laddr,raddr;
 	socklen_t raddr_len;
+	pid_t pid;
 
 	sd = socket(AF_INET,SOCK_STREAM,0/*IPPROTO_TCP,IPPROTO_SCTP*/);
 	if(sd < 0)
@@ -75,17 +77,30 @@ int main()
 
 		newsd = accept(sd,(void *)&raddr,&raddr_len);
 		if(newsd < 0)
-		{
+		{	
+			if(errno == EAGAIN || errno == EINTR)
+				continue;
 			perror("accept");
 			exit(1);
 		}
 
-		inet_ntop(AF_INET,&raddr.sin_addr,ipstr,IPSTRSIZE);
+		pid = fork();
+		if(pid < 0)
+		{
+			perror("fork()");
+			exit(1);
+		}
 
-		printf("----MESSAGE FROM:%s:%d----\n",ipstr,ntohs(raddr.sin_port));
-
-		server_job(newsd);
-	
+		if(pid == 0)	// child
+		{
+			close(sd);
+			inet_ntop(AF_INET,&raddr.sin_addr,ipstr,IPSTRSIZE);
+			printf("----MESSAGE FROM:%s:%d----\n",ipstr,ntohs(raddr.sin_port));
+			server_job(newsd);
+			close(newsd);
+			exit(1);
+		}
+		
 		close(newsd);
 	}
 
