@@ -1,0 +1,30 @@
+#include <iostream> 
+using namespace std;
+
+namespace n1
+{
+	void f()
+	{
+		cout << n1::f() << endl;
+	}
+}
+
+namespace n2
+{
+	void f()
+	{
+		cout << n2::f() << endl;
+	}
+}
+
+
+int main()
+{
+
+	n1::f();
+
+	return 0;
+}
+
+
+
